@@ -1,0 +1,22 @@
+{
+  "server": {
+    "port": 3081,
+    "host": "localhost"
+  },
+  "mongodb": {
+    "url": "mongodb://inventory-oauth-db:27017/inventory",
+    "options": {
+      "useNewUrlParser": true,
+      "useUnifiedTopology": true,
+      "useCreateIndex": true,
+      "useFindAndModify": false
+    }
+  },
+  "cors": {
+    "enabled": true,
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204
+  }
+}
