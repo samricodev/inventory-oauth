@@ -5,7 +5,7 @@ app.use(express.json());
 
 app.get('/ping', (req, res) => {
   console.log('Pong received');
-  res.json('pong');
+  res.send('pong');
 })
 
 module.exports = app;
