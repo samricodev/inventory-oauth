@@ -1,23 +1,22 @@
 const User = require('../models/user');
-const response = require('../utils/response')
 
 const getUsers = async (req, res) => {
   try {
     const users = await User.find();
-    if(!users) return response.error(404, 'Users not found');
-    return response.success(200, 'Users found success', users);
+    if(!users) return res.status(404).json({ message: 'Users not found'});
+    res.json(users);
   } catch(error){
-    response.error(500, error.message);
+    res.status(500).json({ message: error.message})
   }
 }
 
 const getUser = async (req, res) => {
   try {
     const user = await User.finById(req.params.id);
-    if(!user) return response.error(404, 'User not found');
-    response.success(200, 'User found', user);
+    if(!user) return res.status(404).json({ message: 'User not found'});
+    res.json(user);
   } catch(error){
-    response.error(500, error.message);
+    res.status(500).json({ message: error.message});
   }
 }
 
@@ -25,14 +24,26 @@ const createUser = async (req, res) => {
   try{
     const newUser = new User(req.body);
     await newUser.save();
-    response.success(201, 'User created succesfully', newUser);
+    res.status(201).json({message: 'User created succesfully', data: newUser});
   } catch(error) {
-    response.error(500, error.message);
+    res.status(500).json({ message: error.message});
+  }
+}
+
+const deleteUser = async (req, res) => {
+  try {
+    const user = User.findById(req.params.id);
+    if(!user) return res.status(404).json({ message: 'User not found'});
+    await User.remove(user);
+    res.json({ message: 'User deleted'});
+  } catch(error){
+    res.status(500).json({ message: error.message});
   }
 }
 
 module.exports = {
   getUsers,
   getUser,
-  createUser
+  createUser,
+  deleteUser
 }

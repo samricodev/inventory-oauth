@@ -4,7 +4,7 @@
     "host": "localhost"
   },
   "mongodb": {
-    "url": "mongodb://inventory-oauth-db:27018/inventory",
+    "url": "mongodb://inventory-oauth-db:27017/inventory-oauth",
     "options": {
       "useNewUrlParser": true,
       "useUnifiedTopology": true,
