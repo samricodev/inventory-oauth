@@ -1,0 +1,28 @@
+{
+  "name": "inventory-oauth",
+  "version": "1.0.0",
+  "description": "This is a oauth api to inventory project",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index",
+    "start.dev": "nodemon -L",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samricodev/inventory-oauth.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samricodev/inventory-oauth/issues"
+  },
+  "homepage": "https://github.com/samricodev/inventory-oauth#readme",
+  "dependencies": {
+    "config": "^4.0.0",
+    "express": "^5.1.0",
+    "jest": "^30.0.4",
+    "nodemon": "^3.1.10"
+  }
+}
