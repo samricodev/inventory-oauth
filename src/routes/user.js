@@ -7,6 +7,7 @@ UserRouter.post('/login', [
     verifyCredentials,
     userController.loginUser
 ]);
+UserRouter.get('/me/:id', [ userController.getUser ]);
 UserRouter.delete('/:id', [ userController.deleteUser ]);
 
 module.exports = UserRouter;
