@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/samricodev/inventory-oauth#readme",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "config": "^4.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
