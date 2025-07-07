@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const hash = require('../utils/hashPassword');
-const bcrypt = require('bcryptjs');
 
 const createUser = async (req, res) => {
   try {
@@ -37,14 +36,9 @@ const createUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email } = req.body;
     const user = await User.findOne({ email });
-    // create a middleware to handle this logic
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
-    }
-
+  
     res.status(200).json({
       message: 'User logged',
       data: {
