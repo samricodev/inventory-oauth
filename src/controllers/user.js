@@ -1,7 +1,7 @@
 const config = require('config');
 const User = require('../models/user');
 const hash = require('../utils/hashPassword');
-const createToken = require('../utils/token');
+const { createToken } = require('../utils/token');
 const tokenLoginExpires = config.get('tokenLoginExpires');
 
 const createUser = async (req, res) => {
@@ -41,8 +41,8 @@ const loginUser = async (req, res) => {
     const { email } = req.body;
     const user = await User.findOne({ email });
 
-    const token = await createToken({
-      email: newUser.email
+    const token = createToken({
+      email: user.email
     }, tokenLoginExpires);
 
     res.status(200).json({
@@ -52,7 +52,7 @@ const loginUser = async (req, res) => {
         lastName: user.lastName,
         email: user.email,
         role: user.role,
-        token
+        token: token
       }
     });
   } catch (error) {
