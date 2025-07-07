@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const config = require('config');
 
 const connection = () => {
+  mongoose.set("strictQuery", false);
   mongoose.connect(config.get('mongodb.url'),
     {
       useNewUrlParser: true,

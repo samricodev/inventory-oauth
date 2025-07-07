@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken');
-
-const TOKEN_SECRET_KEY = process.env;
-
+const secret = process.env.TOKEN_SECRET_KEY;
 function createToken(data, expiresIn = 0) {
   return new Promise((resolve, reject) => {
+     if (!secret) {
+      return reject(new Error('TOKEN_SECRET_KEY is not defined'));
+    }
     if(data){
-      jwt.sign(data, TOKEN_SECRET_KEY, { expiresIn, algorithm: 'HS256'}, (err, decoded) => {
+      jwt.sign(data, secret, { expiresIn, algorithm: 'HS256'}, (err, decoded) => {
         if(err) {
           reject(err);
         } else {
@@ -20,7 +21,10 @@ function createToken(data, expiresIn = 0) {
 
 function verifyToken(token) {
   return new Promise((resolve, reject) => {
-    jwt.verify(token, TOKEN_SECRET_KEY, { algorithms: ['HS256']}, (err, decoded) => {
+     if (!secret) {
+      return reject(new Error('TOKEN_SECRET_KEY is not defined'));
+    }
+    jwt.verify(token, secret, { algorithms: ['HS256']}, (err, decoded) => {
       if(err) {
         reject(err);
       } else {
