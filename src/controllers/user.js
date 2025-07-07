@@ -1,25 +1,6 @@
 const User = require('../models/user');
 const hash = require('../utils/hashPassword');
-
-const getUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    if (!users) return res.status(404).json({ message: 'Users not found' });
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ message: error.message })
-  }
-}
-
-const getUser = async (req, res) => {
-  try {
-    const user = await User.finById(req.params.id);
-    if (!user) return res.status(404).json({ message: 'User not found' });
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
+const bcrypt = require('bcryptjs');
 
 const createUser = async (req, res) => {
   try {
@@ -54,6 +35,31 @@ const createUser = async (req, res) => {
   }
 }
 
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    // create a middleware to handle this logic
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    res.status(200).json({
+      message: 'User logged',
+      data: {
+        name: user.name,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+}
+
 const deleteUser = async (req, res) => {
   try {
     const user = User.findById(req.params.id);
@@ -66,8 +72,7 @@ const deleteUser = async (req, res) => {
 }
 
 module.exports = {
-  getUsers,
-  getUser,
   createUser,
+  loginUser,
   deleteUser
 }
