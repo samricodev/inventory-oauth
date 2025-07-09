@@ -1,10 +1,12 @@
 const userController = require('../controllers/user');
 const verifyCredentials = require('../middlewares/verifyCredentials');
 const verifyUpdateUser = require('../middlewares/verifyUpdateUser');
+const verifyRegister = require('../middlewares/verifyRegister');
 const verifyToken = require('../middlewares/verifyToken');
 const UserRouter = require('express').Router();
 
-UserRouter.post('/register', [ 
+UserRouter.post('/register', [
+    verifyRegister,
     userController.createUser 
 ]);
 UserRouter.post('/login', [ 
