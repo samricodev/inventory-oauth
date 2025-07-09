@@ -82,13 +82,26 @@ const getUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const body = req.body;
-    const user = await User.findByIdAndUpdate(id, body);
-    if (!user) {
-      return res.status(404).json(response.error(404, 'User not found'));
-    }
-    res.status(200).json(response.success(200, 'User updated', user));
+    const {
+      name,
+      lastName,
+      email,
+      password,
+      role
+    } = req.body;
+ 
+    const hashPassword = await userUtils.hashPassword(password);
 
+    const updatedUser = {
+      name: name,
+      lastName: lastName,
+      email: email,
+      password: hashPassword,
+      role: role
+    }
+
+    const user = await User.findByIdAndUpdate(id, updatedUser);
+    res.status(200).json(response.success(200, 'User updated', user));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }

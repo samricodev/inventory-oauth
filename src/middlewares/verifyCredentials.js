@@ -1,18 +1,19 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
+const response = require('../utils/response');
 
 function verifyCredentials(req, res, next) {
   const { email, password } = req.body;
   User.findOne({ email })
     .then((user) => {
       if (!user) {
-        return res.status(404).json({ message: 'Invalid credentials' });
+        return res.status(404).json(response.error(404, 'Invalid credentials' ));
       }
 
       bcrypt.compare(password, user.password)
         .then((isMatch) => {
           if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid credentials' });
+            return res.status(400).json(response.error(400, 'Invalid credentials' ));
           }
 
           res.locals.user = {
@@ -24,12 +25,12 @@ function verifyCredentials(req, res, next) {
         })
         .catch((error) => {
           console.error(error);
-          res.status(500).json({ message: 'Error comparing password' });
+          res.status(500).json(response.error(500, 'Error comparing password' ));
         });
     })
     .catch((error) => {
       console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500).json(response.error(500, 'Internal server error'));
     });
 }
 
