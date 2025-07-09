@@ -1,5 +1,5 @@
 const response = require('../utils/response');
-const registerUtils = require('../utils/generalValidations');
+const registerUtils = require('../utils/validations/generalValidations');
 
 function verifyRegister(req, res, next) {
   const {
