@@ -1,7 +1,8 @@
 const config = require('config');
 const User = require('../models/user');
-const hash = require('../utils/hashPassword');
+const userUtils = require('../utils/user');
 const { createToken } = require('../utils/token');
+const response = require('../utils/response');
 const tokenLoginExpires = config.get('tokenLoginExpires');
 
 const createUser = async (req, res) => {
@@ -11,14 +12,9 @@ const createUser = async (req, res) => {
       lastName,
       email,
       password,
-      role,
     } = req.body;
 
-    if (role === 1) {
-      return res.status(400).json({ message: 'You can not register with this role' });
-    }
-
-    let passwordHashed = await hash.hashPassword(password);
+    let passwordHashed = await userUtils.hashPassword(password);
     let idRole = 2;
 
     const newUser = new User({
@@ -30,9 +26,9 @@ const createUser = async (req, res) => {
     });
 
     await newUser.save();
-    res.status(201).json({ message: 'User created succesfully', data: newUser });
+    res.status(201).json(response.success(201, 'User created', newUser));
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json(response.error(500, error.message));
   }
 }
 
@@ -41,50 +37,70 @@ const loginUser = async (req, res) => {
     const { email } = req.body;
     const user = await User.findOne({ email });
 
-    const token = createToken({
-      email: user.email
-    }, tokenLoginExpires);
-    
-    res.status(200).json({
-      message: 'User logged',
-      data: {
+    if (!user) {
+      return res.status(404).json(response.error(404, 'User not found'));
+    }
+
+    const token = createToken(
+      { id: user._id, email: user.email },
+      tokenLoginExpires
+    );
+
+    res.status(200).json(response.success(
+      200,
+      'User logged successfully',
+      {
         name: user.name,
         lastName: user.lastName,
         email: user.email,
         role: user.role,
         token: token
       }
-    });
+    ));
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json(response.error(500, error.message));
   }
-}
+};
 
 const getUser = async (req, res) => {
   try {
-    const { id } = req.params.id;
+    const { id } = req.params;
     if (!id) {
-      return res.status(400).json('Id not found');
+      return res.status(400).json(response.error(400, 'Id not found'));
     }
     const user = await User.findById(id);
     if (!user) {
-      return res.status(404).json('User not found');
+      return res.status(404).json(response.error(404, 'User not found'));
     }
-    return res.status(200).json({ data: user });
+    return res.status(200).json(response.success(200, 'User information successfully obtained', user));
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json(response.error(500, error.message));
+  }
+}
+
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const user = await User.findByIdAndUpdate(id, body);
+    if (!user) {
+      return res.status(404).json(response.error(404, 'User not found'));
+    }
+    res.status(200).json(response.success(200, 'User updated', user));
+
+  } catch (error) {
+    res.status(500).json(response.error(500, error.message));
   }
 }
 
 const deleteUser = async (req, res) => {
   try {
-    const user = User.findById(req.params.id);
-    if (!user) return res.status(404).json({ message: 'User not found' });
-    await User.remove(user);
-    res.json({ message: 'User deleted' });
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) return res.status(404).json(response.error(404, 'User not found'));
+    res.status(200).json(response.success(200, 'User deleted', user));
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json(response.error(500, error.message));
   }
 }
 
@@ -92,5 +108,6 @@ module.exports = {
   createUser,
   loginUser,
   getUser,
+  updateUser,
   deleteUser
 }
