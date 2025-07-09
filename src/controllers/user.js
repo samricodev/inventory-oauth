@@ -37,13 +37,18 @@ const loginUser = async (req, res) => {
     const { email } = req.body;
     const user = await User.findOne({ email });
 
-    const token = createToken({
-      email: user.email
-    }, tokenLoginExpires);
+    if (!user) {
+      return res.status(404).json(response.error(404, 'User not found'));
+    }
+
+    const token = createToken(
+      { id: user._id, email: user.email },
+      tokenLoginExpires
+    );
 
     res.status(200).json(response.success(
       200,
-      'User logged succesfully',
+      'User logged successfully',
       {
         name: user.name,
         lastName: user.lastName,
@@ -53,10 +58,10 @@ const loginUser = async (req, res) => {
       }
     ));
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json(response.error(500, error.message));
   }
-}
+};
 
 const getUser = async (req, res) => {
   try {
