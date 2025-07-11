@@ -10,7 +10,7 @@ connection();
 
 app.use(express.json());
 
-app.use('/', router);
+app.use('/auth/', router);
 app.get('/ping', (req, res) => {
   console.log('Pong received');
   res.send('pong');
