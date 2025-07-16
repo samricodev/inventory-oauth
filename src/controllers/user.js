@@ -26,7 +26,7 @@ const createUser = async (req, res) => {
     });
 
     await newUser.save();
-    res.status(201).json(response.success(201, 'User created', newUser));
+    res.status(201).json(response.success(201, res.translate('User created'), newUser));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
@@ -38,7 +38,7 @@ const loginUser = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).json(response.error(404, 'User not found'));
+      return res.status(404).json(response.error(404, res.translate('User not found')));
     }
 
     const token = createToken(
@@ -48,7 +48,7 @@ const loginUser = async (req, res) => {
 
     res.status(200).json(response.success(
       200,
-      'User logged successfully',
+      res.translate('User logged successfully'),
       {
         name: user.name,
         lastName: user.lastName,
@@ -67,13 +67,13 @@ const getUser = async (req, res) => {
   try {
     const { id } = req.params;
     if (!id) {
-      return res.status(400).json(response.error(400, 'Id not found'));
+      return res.status(400).json(response.error(400, res.translate('Id not found')));
     }
     const user = await User.findById(id);
     if (!user) {
-      return res.status(404).json(response.error(404, 'User not found'));
+      return res.status(404).json(response.error(404, res.translate('User not found')));
     }
-    return res.status(200).json(response.success(200, 'User information successfully obtained', user));
+    return res.status(200).json(response.success(200, res.translate('User information successfully obtained', user)));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
@@ -101,7 +101,7 @@ const updateUser = async (req, res) => {
     }
 
     const user = await User.findByIdAndUpdate(id, updatedUser);
-    res.status(200).json(response.success(200, 'User updated', user));
+    res.status(200).json(response.success(200, res.translate('User updated'), user));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
@@ -110,8 +110,8 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
-    if (!user) return res.status(404).json(response.error(404, 'User not found'));
-    res.status(200).json(response.success(200, 'User deleted', user));
+    if (!user) return res.status(404).json(response.error(404, res.translate('User not found')));
+    res.status(200).json(response.success(200, res.translate('User deleted', user)));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
