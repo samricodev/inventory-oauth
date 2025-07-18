@@ -7,7 +7,7 @@ function verifyCredentials(req, res, next) {
   User.findOne({ email })
     .then((user) => {
       if (!user) {
-        return res.status(404).json(response.error(404, res.translate('Invalid credentials' )));
+        return res.status(404).json(response.error(404, res.translate('User not registered')));
       }
 
       bcrypt.compare(password, user.password)
