@@ -12,6 +12,5 @@ i18n.configure({
 
 module.exports = function i18nconf(req, res, next) {
   i18n.init(req, res);
-  console.log('i18n working');
   return next();
 };
