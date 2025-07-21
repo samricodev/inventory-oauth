@@ -73,7 +73,7 @@ const getUser = async (req, res) => {
     if (!user) {
       return res.status(404).json(response.error(404, res.translate('User not found')));
     }
-    return res.status(200).json(response.success(200, res.translate('User information successfully obtained', user)));
+    return res.status(200).json(response.success(200, res.translate('User information successfully obtained'), user));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
@@ -111,7 +111,7 @@ const deleteUser = async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) return res.status(404).json(response.error(404, res.translate('User not found')));
-    res.status(200).json(response.success(200, res.translate('User deleted', user)));
+    res.status(200).json(response.success(200, res.translate('User deleted'), user));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
