@@ -15,7 +15,7 @@ const getUser = async (req, res) => {
   try {
     const user = await User.finById(req.params.id);
     if (!user) return res.status(404).json(response.error(404, res.translate('User not found')));
-    res.status(200).json(response.success(200, res.translate('User information obtainded successfulluy', user)));
+    res.status(200).json(response.success(200, res.translate('User information obtainded successfulluy'), user));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
   }
@@ -29,7 +29,7 @@ const updateUser = async (req, res) => {
     if(!user) {
       return res.status(404).json(response.error(404, res.translate('User not found')));
     }
-    res.status(200).json(response.success(4200, res.translate('User updated', user)));
+    res.status(200).json(response.success(4200, res.translate('User updated'), user));
 
   } catch(error) {
     res.status(500).json(response.error(500, error.message));
