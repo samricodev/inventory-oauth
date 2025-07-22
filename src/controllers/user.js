@@ -26,6 +26,7 @@ const createUser = async (req, res) => {
     });
 
     await newUser.save();
+    await userUtils.sendWelcomeEmail(email);
     res.status(201).json(response.success(201, res.translate('User created'), newUser));
   } catch (error) {
     res.status(500).json(response.error(500, error.message));
@@ -86,17 +87,14 @@ const updateUser = async (req, res) => {
       name,
       lastName,
       email,
-      password,
       role
     } = req.body;
- 
-    const hashPassword = await userUtils.hashPassword(password);
+
 
     const updatedUser = {
       name: name,
       lastName: lastName,
       email: email,
-      password: hashPassword,
       role: role
     }
 
