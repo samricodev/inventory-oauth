@@ -4,7 +4,7 @@
     "host": "localhost"
   },
   "mongodb": {
-    "url": "mongodb://inventory-oauth-db:27017/inventory-oauth",
+    "url": "mongodb+srv://sam:12345@inventory.t56pbde.mongodb.net/?retryWrites=true&w=majority&appName=Inventory",
     "options": {
       "useNewUrlParser": true,
       "useUnifiedTopology": true,
