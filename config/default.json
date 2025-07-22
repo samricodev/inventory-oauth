@@ -4,7 +4,7 @@
     "host": "localhost"
   },
   "mongodb": {
-    "url": "mongodb+srv://sam:12345@inventory.t56pbde.mongodb.net/?retryWrites=true&w=majority&appName=Inventory",
+    "url": "${MONGODB_URI}",
     "options": {
       "useNewUrlParser": true,
       "useUnifiedTopology": true,
