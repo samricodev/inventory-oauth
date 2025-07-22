@@ -13,11 +13,11 @@
     }
   },
   "cors": {
-    "enabled": true,
-    "origin": "*",
-    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "preflightContinue": false,
-    "optionsSuccessStatus": 204
-  },
+  "enabled": true,
+  "origin": "https://inventory-dashboard-rho.vercel.app",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+},
   "tokenLoginExpires": 10800
 }
