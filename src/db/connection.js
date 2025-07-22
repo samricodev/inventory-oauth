@@ -3,7 +3,7 @@ const config = require('config');
 
 const connection = () => {
   mongoose.set("strictQuery", false);
-  mongoose.connect(config.get('mongodb.url'),
+  mongoose.connect(process.env.MONGODB_URI || config.get('mongodb.url'),
     {
       useNewUrlParser: true,
       useUnifiedTopology: true
