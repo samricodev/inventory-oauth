@@ -10,6 +10,7 @@
   "Id not found": "Id not found",
   "User information successfully obtained": "User information successfully obtained",
   "User deleted": "User deleted",
+  "User deleted successfully": "User deleted successfully",
   "Invalid credentials": "Invalid credentials",
   "Error comparing password": "Error comparing password",
   "Internal server error": "Internal server error",
