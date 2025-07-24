@@ -1,20 +1,16 @@
 const mongoose = require('mongoose');
-const config = require('config');
+const createAdminUser = require('./utils/createAdmin');
 
-const connection = () => {
-  mongoose.set("strictQuery", false);
-  mongoose.connect(process.env.MONGODB_URI || config.get('mongodb.url'),
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-
-    })
-    .then(() => {
-      
-      console.log('MongoDB connected')
-  })
-    .catch(err => console.log(err)
-    );
-}
+const connection = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('✅ MongoDB connected');
+    require('./models/user');
+    await createAdminUser();
+  } catch (error) {
+    console.error('❌ MongoDB connection error:', error.message);
+    process.exit(1);
+  }
+};
 
 module.exports = connection;
