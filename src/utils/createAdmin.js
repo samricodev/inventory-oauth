@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const User = require('../models/user');
 const bcrypt = require('bcryptjs');
-const User = mongoose.model('User');
+ 
 
 async function createAdminUser() {
   const existingAdmin = await User.findOne({ role: '1' });
