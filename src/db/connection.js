@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const createAdminUser = require('./utils/createAdmin');
+const createAdminUser = require('../utils/createAdmin');
 
 const connection = async () => {
   try {
