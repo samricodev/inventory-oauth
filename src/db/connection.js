@@ -9,7 +9,10 @@ const connection = () => {
       useUnifiedTopology: true
 
     })
-    .then(() => console.log('MongoDB connected'))
+    .then(() => {
+      
+      console.log('MongoDB connected')
+  })
     .catch(err => console.log(err)
     );
 }
