@@ -6,7 +6,7 @@ async function createAdminUser() {
   const existingAdmin = await User.findOne({ role: '1' });
 
   if (existingAdmin) {
-    console.log('✅ Admin user already exists');
+    console.log('Admin user already exists');
     return;
   }
 
@@ -14,7 +14,7 @@ async function createAdminUser() {
   const adminPassword = process.env.ADMIN_PASSWORD;
 
   if (!adminEmail || !adminPassword) {
-    console.error('❌ ADMIN_EMAIL and ADMIN_PASSWORD must be defined in .env');
+    console.error('ADMIN_EMAIL and ADMIN_PASSWORD must be defined in .env');
     return;
   }
 
@@ -29,7 +29,7 @@ async function createAdminUser() {
   });
 
   await admin.save();
-  console.log('✅ Admin user created successfully');
+  console.log('Admin user created successfully');
 }
 
 module.exports = createAdminUser;
