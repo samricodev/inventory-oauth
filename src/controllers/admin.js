@@ -8,7 +8,7 @@ const getUsers = async (req, res) => {
     const parsedLimit = parseInt(limit);
     const parsedPage = parseInt(page);
 
-    const [users, toal] = await Promise.all([
+    const [users, total] = await Promise.all([
       User.find()
         .skip(skip)
         .limit(parsedLimit),
@@ -17,9 +17,9 @@ const getUsers = async (req, res) => {
       
     const result = {
       users,
-      total: toal,
       page: parsedPage,
-      limit: parsedLimit
+      totalPages: Math.ceil(total / parsedLimit),
+      totalUsers: total
     };
 
     if (!users) return res.status(404).json(response.error(404, res.translate('Users not found')));
