@@ -13,14 +13,14 @@
     }
   },
   "cors": {
-  "enabled": true,
-  "origin": [
-    "https://inventory-dashboard-rho.vercel.app",
-    "https://www.inventoryapp.dev"
-  ],
-  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 204
-},
+    "enabled": true,
+    "origin": [
+      "https://www.inventoryapp.dev",
+      "https://inventory-dashboard-rho.vercel.app"
+    ],
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204
+  },
   "tokenLoginExpires": 10800
 }
