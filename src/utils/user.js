@@ -35,7 +35,7 @@ async function sendWelcomeEmail(email){
         Desde ahora podrás gestionar tu inventario de manera sencilla, rápida y eficiente.
       </p>
       <div style="text-align: center; margin: 30px 0;">
-        <a href="https://inventory-dashboard-rho.vercel.app/" style="background-color: #27ae60; color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; font-weight: bold;">Comenzar ahora</a>
+        <a href="http://localhost:3000/" style="background-color: #27ae60; color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; font-weight: bold;">Comenzar ahora</a>
       </div>
       <p style="font-size: 14px; color: #7f8c8d;">
         Si tienes alguna duda, no dudes en responder a este correo.
