@@ -1,0 +1,13 @@
+services:
+  inventory-oauth:
+    container_name: inventory-oauth
+    build: .
+    volumes:
+      - .:/inventory-oauth
+    ports:
+      - '3000:3000'
+    networks:
+      - inventory
+networks:
+  inventory:
+    external: true
