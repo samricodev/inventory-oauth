@@ -8,6 +8,6 @@ RUN npm install
 
 COPY ./src/index.js .
 
-EXPOSE 3081
+EXPOSE 3000
 
 CMD [ "npm", "run", "start.dev" ]
